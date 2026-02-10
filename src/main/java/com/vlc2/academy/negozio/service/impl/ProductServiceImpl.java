@@ -3,6 +3,7 @@ package com.vlc2.academy.negozio.service.impl;
 import com.vlc2.academy.negozio.dto.product.ProductCreateDTO;
 import com.vlc2.academy.negozio.dto.product.ProductReadDTO;
 import com.vlc2.academy.negozio.entity.Product;
+import com.vlc2.academy.negozio.exceptions.ProductNotFound;
 import com.vlc2.academy.negozio.mapper.ProductMapper;
 import com.vlc2.academy.negozio.repository.ProductRepository;
 import com.vlc2.academy.negozio.service.ProductService;
@@ -22,6 +23,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void createProduct(ProductCreateDTO productCreateDTO) {
+
+        Product product = new Product(productCreateDTO.getName(), productCreateDTO.getPrice(), productCreateDTO.getQuantityInStock());
+
+        productRepository.save(product);
+    }
+
+    @Override
+    public ProductReadDTO getProductById(Integer id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFound(String.format("There isn't any product with id = %d",id)));
+        ProductReadDTO productReadDTO = productMapper.toDTO(product);
+        return productReadDTO;
+    }
+
+    @Override
     public List<ProductReadDTO> getProducts() {
         List<Product> products = productRepository.findAll();
         List<ProductReadDTO> productReadDTO = products.stream()
@@ -30,11 +47,4 @@ public class ProductServiceImpl implements ProductService {
         return productReadDTO;
     }
 
-    @Override
-    public void createProduct(ProductCreateDTO productCreateDTO) {
-
-        Product product = new Product(productCreateDTO.getName(), productCreateDTO.getPrice(), productCreateDTO.getQuantityInStock());
-
-        productRepository.save(product);
-    }
 }

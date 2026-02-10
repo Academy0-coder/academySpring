@@ -7,10 +7,7 @@ import com.vlc2.academy.negozio.dto.customer.CustomerReadDTO;
 import com.vlc2.academy.negozio.service.CustomerService;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +27,13 @@ public class CustomerControllerImpl implements CustomerController {
         CustomerCommand customerCommand = beanFactory.getBean(CustomerCommand.class, customerService, customerCreateDTO);
         customerCommand.execute();
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/customers/{customerId}")
+    public ResponseEntity<CustomerReadDTO> getUserById(@PathVariable Integer customerId) {
+
+        return ResponseEntity.ok(customerService.getUserById(customerId));
+
     }
 
     @GetMapping("/customers")

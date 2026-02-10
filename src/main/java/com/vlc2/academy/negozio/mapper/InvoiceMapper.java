@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InvoiceMapper {
 
-    public InvoiceReadDTO toDto (Invoice invoice){
+    public InvoiceReadDTO toDTO (Invoice invoice){
         return new InvoiceReadDTO(invoice.getId(),
                 invoice.getQuantity(),
                 invoice.getCustomer().getName(),

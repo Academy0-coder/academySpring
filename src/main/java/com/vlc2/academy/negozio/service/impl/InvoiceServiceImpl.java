@@ -2,10 +2,12 @@ package com.vlc2.academy.negozio.service.impl;
 
 import com.vlc2.academy.negozio.dto.invoice.InvoiceCreateDTO;
 import com.vlc2.academy.negozio.dto.invoice.InvoiceReadDTO;
+import com.vlc2.academy.negozio.dto.product.ProductReadDTO;
 import com.vlc2.academy.negozio.entity.Customer;
 import com.vlc2.academy.negozio.entity.Invoice;
 import com.vlc2.academy.negozio.entity.Product;
 import com.vlc2.academy.negozio.exceptions.CustomerNotFound;
+import com.vlc2.academy.negozio.exceptions.InvoiceNotFound;
 import com.vlc2.academy.negozio.exceptions.OutOfStock;
 import com.vlc2.academy.negozio.exceptions.ProductNotFound;
 import com.vlc2.academy.negozio.mapper.InvoiceMapper;
@@ -32,15 +34,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         this.invoiceMapper = invoiceMapper;
     }
 
-
-    @Override
-    public List<InvoiceReadDTO> getInvoices() {
-        List<Invoice> invoices = invoiceRepository.findAll();
-        List<InvoiceReadDTO> invoicesDTO = invoices.stream()
-                .map(invoice -> invoiceMapper.toDto(invoice))
-                .toList();
-        return invoicesDTO;
-    }
 
     @Override
     public void executeTransaction(InvoiceCreateDTO invoiceCreateDTO) {
@@ -75,5 +68,22 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         productRepository.save(product);
         invoiceRepository.save(invoice);
+    }
+
+    @Override
+    public InvoiceReadDTO getInvoiceById(Integer id) {
+        Invoice invoice = invoiceRepository.findById(id)
+                .orElseThrow(() -> new InvoiceNotFound(String.format("There isn't any invoice with id = %d",id)));
+        InvoiceReadDTO invoiceReadDTO = invoiceMapper.toDTO(invoice);
+        return invoiceReadDTO;
+    }
+
+    @Override
+    public List<InvoiceReadDTO> getInvoices() {
+        List<Invoice> invoices = invoiceRepository.findAll();
+        List<InvoiceReadDTO> invoicesDTO = invoices.stream()
+                .map(invoice -> invoiceMapper.toDTO(invoice))
+                .toList();
+        return invoicesDTO;
     }
 }

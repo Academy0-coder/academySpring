@@ -2,15 +2,13 @@ package com.vlc2.academy.negozio.controller.impl;
 
 import com.vlc2.academy.negozio.command.ProductCommand;
 import com.vlc2.academy.negozio.controller.ProductController;
+import com.vlc2.academy.negozio.dto.customer.CustomerReadDTO;
 import com.vlc2.academy.negozio.dto.product.ProductCreateDTO;
 import com.vlc2.academy.negozio.dto.product.ProductReadDTO;
 import com.vlc2.academy.negozio.service.ProductService;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,13 @@ public class ProductControllerImpl implements ProductController {
         ProductCommand productCommand = beanFactory.getBean(ProductCommand.class, productService, productCreateDTO);
         productCommand.execute();
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/products/{productId}")
+    public ResponseEntity<ProductReadDTO> getProductById(@PathVariable Integer productId) {
+
+        return ResponseEntity.ok(productService.getProductById(productId));
+
     }
 
     @GetMapping("/products")

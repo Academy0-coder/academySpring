@@ -1,5 +1,6 @@
 package com.vlc2.academy.negozio.service;
 
+import com.vlc2.academy.negozio.dto.customer.CustomerReadDTO;
 import com.vlc2.academy.negozio.dto.invoice.InvoiceCreateDTO;
 import com.vlc2.academy.negozio.dto.invoice.InvoiceReadDTO;
 
@@ -12,6 +13,9 @@ public interface InvoiceService {
     void executeTransaction (InvoiceCreateDTO invoiceCreateDTO);
 
     // READ
+    // Get a customer by id
+    InvoiceReadDTO getInvoiceById(Integer id);
+
     // Get all invoices
     List<InvoiceReadDTO> getInvoices();
 
