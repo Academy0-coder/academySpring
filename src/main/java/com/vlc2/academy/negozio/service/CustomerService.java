@@ -12,7 +12,6 @@ public interface CustomerService {
 
     // CREATE
     // Save a new user
-    @Transactional
     CustomerReadDTO createUser(CustomerCreateDTO customerCreateDTO);
 
     // READ

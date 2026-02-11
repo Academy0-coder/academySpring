@@ -25,10 +25,9 @@ public class InvoiceControllerImpl implements InvoiceController {
     }
 
     @PostMapping("/invoices")
-    public ResponseEntity<Void> executeTransaction(@RequestBody InvoiceCreateDTO invoiceCreateDto){
+    public ResponseEntity<InvoiceReadDTO> executeTransaction(@RequestBody InvoiceCreateDTO invoiceCreateDto){
         InvoiceCommand invoiceCommand = beanFactory.getBean(InvoiceCommand.class, invoiceService, invoiceCreateDto);
-        invoiceCommand.execute();
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(invoiceCommand.execute());
     }
 
     @GetMapping("/invoices/{invoiceId}")

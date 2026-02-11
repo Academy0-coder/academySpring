@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface InvoiceController {
 
-    ResponseEntity<Void> executeTransaction(InvoiceCreateDTO invoiceCreateDto);
+    ResponseEntity<InvoiceReadDTO> executeTransaction(InvoiceCreateDTO invoiceCreateDto);
 
     ResponseEntity<InvoiceReadDTO> getInvoiceById(Integer invoiceId);
     ResponseEntity<List<InvoiceReadDTO>> getInvoices();

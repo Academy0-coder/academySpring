@@ -13,8 +13,7 @@ public interface InvoiceService {
 
     // CREATE
     // Do a transaction and create a new invoice
-    @Transactional
-    void executeTransaction (InvoiceCreateDTO invoiceCreateDTO);
+    InvoiceReadDTO executeTransaction (InvoiceCreateDTO invoiceCreateDTO);
 
     // READ
     // Get a customer by id

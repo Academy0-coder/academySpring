@@ -37,7 +37,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 
     @Override
-    public void executeTransaction(InvoiceCreateDTO invoiceCreateDTO) {
+    public InvoiceReadDTO executeTransaction(InvoiceCreateDTO invoiceCreateDTO) {
 
         Integer customerId = invoiceCreateDTO.getCustomerId();
         Integer productId = invoiceCreateDTO.getProductId();
@@ -67,6 +67,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         productRepository.save(product);
         invoiceRepository.save(invoice);
+
+        return invoiceMapper.toDTO(invoice);
     }
 
     @Override

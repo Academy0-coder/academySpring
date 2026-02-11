@@ -1,6 +1,7 @@
 package com.vlc2.academy.negozio.command;
 
 import com.vlc2.academy.negozio.dto.invoice.InvoiceCreateDTO;
+import com.vlc2.academy.negozio.dto.invoice.InvoiceReadDTO;
 import com.vlc2.academy.negozio.service.InvoiceService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,17 +20,18 @@ public class InvoiceCommand {
     private final InvoiceService invoiceService;
     private final InvoiceCreateDTO invoiceCreateDTO;
 
-    public void execute(){
+    public InvoiceReadDTO execute(){
         if (canExecute()){
-            doExecute();
+            return doExecute();
         }
+        return null;
     }
 
     private boolean canExecute(){
         return !(invoiceCreateDTO.getQuantity() == null || invoiceCreateDTO.getQuantity() <= 0);
     }
 
-    private void doExecute(){
-        invoiceService.executeTransaction(invoiceCreateDTO);
+    private InvoiceReadDTO doExecute(){
+        return invoiceService.executeTransaction(invoiceCreateDTO);
     }
 }

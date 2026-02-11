@@ -12,7 +12,6 @@ public interface ProductService {
 
     // CREATE
     // Save a new product
-    @Transactional
     ProductReadDTO createProduct(ProductCreateDTO productCreateDTO);
 
     // READ
