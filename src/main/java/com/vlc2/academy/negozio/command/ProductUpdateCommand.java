@@ -2,6 +2,7 @@ package com.vlc2.academy.negozio.command;
 
 import com.vlc2.academy.negozio.dto.product.ProductCreateDTO;
 import com.vlc2.academy.negozio.dto.product.ProductReadDTO;
+import com.vlc2.academy.negozio.dto.product.ProductUpdateDTO;
 import com.vlc2.academy.negozio.service.ProductService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,24 +16,24 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class ProductCommand {
-    private final ProductService productService;
-    private final ProductCreateDTO dto;
+public class ProductUpdateCommand {
 
-    public void execute(){
+    private final ProductService productService;
+    private final ProductUpdateDTO productUpdateDTO;
+
+    public ProductReadDTO execute(){
         if (canExecute()){
-            doExecute();
+            return doExecute();
         }
+        return null;
     }
 
     private boolean canExecute(){
-        return !((dto.getName() == null || dto.getName().isBlank())
-                || (dto.getPrice() == null || dto.getPrice() <= 0)
-                || (dto.getQuantityInStock() == null || dto.getQuantityInStock() <= 0));
+        return !((productUpdateDTO.getId() == null || productUpdateDTO.getId() <= 0)
+                || (productUpdateDTO.getQuantity() == null || productUpdateDTO.getQuantity() <= 0));
     }
 
-    private void doExecute(){
-        productService.createProduct(dto);
+    private ProductReadDTO doExecute(){
+        return productService.updateProduct(productUpdateDTO);
     }
-
 }

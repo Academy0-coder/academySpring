@@ -1,8 +1,10 @@
 package com.vlc2.academy.negozio.controller.impl;
 
-import com.vlc2.academy.negozio.command.CustomerCommand;
+import com.vlc2.academy.negozio.command.CustomerCreateCommand;
+import com.vlc2.academy.negozio.command.CustomerDeleteCommand;
 import com.vlc2.academy.negozio.controller.CustomerController;
 import com.vlc2.academy.negozio.dto.customer.CustomerCreateDTO;
+import com.vlc2.academy.negozio.dto.customer.CustomerDeleteDTO;
 import com.vlc2.academy.negozio.dto.customer.CustomerReadDTO;
 import com.vlc2.academy.negozio.service.CustomerService;
 import org.springframework.beans.factory.BeanFactory;
@@ -23,13 +25,12 @@ public class CustomerControllerImpl implements CustomerController {
     }
 
     @PostMapping("/customers")
-    public ResponseEntity<Void> createUser(@RequestBody CustomerCreateDTO customerCreateDTO){
-        CustomerCommand customerCommand = beanFactory.getBean(CustomerCommand.class, customerService, customerCreateDTO);
-        customerCommand.execute();
-        return ResponseEntity.ok(null);
+    public ResponseEntity<CustomerReadDTO> createUser(@RequestBody CustomerCreateDTO customerCreateDTO){
+        CustomerCreateCommand customerCreateCommand = beanFactory.getBean(CustomerCreateCommand.class, customerService, customerCreateDTO);
+        return ResponseEntity.ok(customerCreateCommand.execute());
     }
 
-    @GetMapping("/customers/{customerId}")
+    @GetMapping("/customers/id/{customerId}")
     public ResponseEntity<CustomerReadDTO> getUserById(@PathVariable Integer customerId) {
 
         return ResponseEntity.ok(customerService.getUserById(customerId));
@@ -41,4 +42,24 @@ public class CustomerControllerImpl implements CustomerController {
 
         return ResponseEntity.ok(customerService.getUsers());
     }
+
+    @GetMapping("/customers/name/{customerName}")
+    public ResponseEntity<List<CustomerReadDTO>> getUsersByName(@PathVariable String customerName) {
+
+        return ResponseEntity.ok(customerService.getUsersByName(customerName));
+    }
+
+    @GetMapping("/customers/alphabetically")
+    public ResponseEntity<List<CustomerReadDTO>> getUsersAlphabetically(){
+
+        return ResponseEntity.ok(customerService.getUsersAlphabetically());
+    }
+
+    @DeleteMapping("/customers")
+    public ResponseEntity<CustomerReadDTO> deleteCustomer(CustomerDeleteDTO customerDeleteDTO){
+        CustomerDeleteCommand customerDeleteCommand = beanFactory.getBean(CustomerDeleteCommand.class, customerService, customerDeleteDTO);
+        return ResponseEntity.ok(customerDeleteCommand.execute());
+    }
+
+
 }

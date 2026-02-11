@@ -1,6 +1,7 @@
 package com.vlc2.academy.negozio.service.impl;
 
 import com.vlc2.academy.negozio.dto.customer.CustomerCreateDTO;
+import com.vlc2.academy.negozio.dto.customer.CustomerDeleteDTO;
 import com.vlc2.academy.negozio.dto.customer.CustomerReadDTO;
 import com.vlc2.academy.negozio.entity.Customer;
 import com.vlc2.academy.negozio.exceptions.CustomerNotFound;
@@ -26,31 +27,46 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void createUser(CustomerCreateDTO customerCreateDTO) {
-
+    public CustomerReadDTO createUser(CustomerCreateDTO customerCreateDTO) {
         Customer customer = new Customer(customerCreateDTO.getName(), customerCreateDTO.getSurname());
-
-        Customer saved = customerRepository.save(customer);
-
+        customerRepository.save(customer);
+        return customerMapper.toDTO(customer);
     }
 
     @Override
     public CustomerReadDTO getUserById(Integer id) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFound(String.format("There isn't any customer with id = %d",id)));
-        CustomerReadDTO customerReadDTO = customerMapper.toDTO(customer);
-        return customerReadDTO;
+        return customerMapper.toDTO(customer);
     }
 
     @Override
     public List<CustomerReadDTO> getUsers() {
         List<Customer> customers = customerRepository.findAll();
-        List<CustomerReadDTO> customersDTO = customers.stream()
-                .map(customer -> customerMapper.toDTO(customer))
-                .toList();
-        return customersDTO;
+        return customerMapper.toDTO(customers);
     }
 
+    @Override
+    public List<CustomerReadDTO> getUsersAlphabetically() {
+        List<Customer> customers = customerRepository.findAllOrderedAlphabetically();
+        return customerMapper.toDTO(customers);
+    }
+
+
+    @Override
+    public List<CustomerReadDTO> getUsersByName(String name) {
+        List<Customer> customers = customerRepository.findByName(name);
+        return customerMapper.toDTO(customers);
+    }
+
+    @Override
+    public CustomerReadDTO deleteUser(CustomerDeleteDTO customerDeleteDTO) {
+        Integer id = customerDeleteDTO.getId();
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFound(String.format("There isn't any customer with id = %d",id)));
+        customerRepository.delete(customer);
+        return customerMapper.toDTO(customer);
+    }
 
 
 

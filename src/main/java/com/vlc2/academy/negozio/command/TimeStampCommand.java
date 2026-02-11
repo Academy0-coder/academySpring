@@ -1,6 +1,7 @@
 package com.vlc2.academy.negozio.command;
 
-import com.vlc2.academy.negozio.dto.invoice.InvoiceCreateDTO;
+import com.vlc2.academy.negozio.dto.invoice.InvoiceReadDTO;
+import com.vlc2.academy.negozio.dto.invoice.TimeSpan;
 import com.vlc2.academy.negozio.service.InvoiceService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,27 +10,30 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class InvoiceCommand {
+public class TimeStampCommand {
 
     private final InvoiceService invoiceService;
-    private final InvoiceCreateDTO invoiceCreateDTO;
+    private final TimeSpan timeSpan;
 
-    public void execute(){
+    public List<InvoiceReadDTO> execute(){
         if (canExecute()){
-            doExecute();
+            return doExecute();
         }
+        return List.of();
     }
 
     private boolean canExecute(){
-        return !(invoiceCreateDTO.getQuantity() == null || invoiceCreateDTO.getQuantity() <= 0);
+        return !(timeSpan.getStart() == null || timeSpan.getEnd() == null);
     }
 
-    private void doExecute(){
-        invoiceService.executeTransaction(invoiceCreateDTO);
+    public List<InvoiceReadDTO> doExecute(){
+        return invoiceService.getInvoicesInATimeSpan(timeSpan);
     }
 }

@@ -2,7 +2,7 @@ package com.vlc2.academy.negozio.service.impl;
 
 import com.vlc2.academy.negozio.dto.invoice.InvoiceCreateDTO;
 import com.vlc2.academy.negozio.dto.invoice.InvoiceReadDTO;
-import com.vlc2.academy.negozio.dto.product.ProductReadDTO;
+import com.vlc2.academy.negozio.dto.invoice.TimeSpan;
 import com.vlc2.academy.negozio.entity.Customer;
 import com.vlc2.academy.negozio.entity.Invoice;
 import com.vlc2.academy.negozio.entity.Product;
@@ -17,6 +17,7 @@ import com.vlc2.academy.negozio.repository.ProductRepository;
 import com.vlc2.academy.negozio.service.InvoiceService;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -58,9 +59,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                     quantityLeft));
         }
 
-
-
-        Invoice invoice = new Invoice(quantitySold, customer, product);
+        Invoice invoice = new Invoice(quantitySold, customer, product, Instant.now());
         product.setQuantity(quantityLeft - quantitySold);
         product.setQuantitySold(product.getQuantitySold() + quantitySold);
         product.addInvoice(invoice);
@@ -81,9 +80,24 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public List<InvoiceReadDTO> getInvoices() {
         List<Invoice> invoices = invoiceRepository.findAll();
-        List<InvoiceReadDTO> invoicesDTO = invoices.stream()
-                .map(invoice -> invoiceMapper.toDTO(invoice))
-                .toList();
-        return invoicesDTO;
+        return invoiceMapper.toDTO(invoices);
+    }
+
+    @Override
+    public List<InvoiceReadDTO> getInvoicesInATimeSpan(TimeSpan timeSpan) {
+        List<Invoice> invoices = invoiceRepository.findInATimeSpan(timeSpan.getStart(), timeSpan.getEnd());
+        return invoiceMapper.toDTO(invoices);
+    }
+
+    @Override
+    public List<InvoiceReadDTO> getInvoicesByCustomerId(Integer id) {
+        List<Invoice> invoices = invoiceRepository.findAllByCustomerId(id);
+        return invoiceMapper.toDTO(invoices);
+    }
+
+    @Override
+    public List<InvoiceReadDTO> getInvoicesByProductId(Integer id) {
+        List<Invoice> invoices = invoiceRepository.findAllByProductId(id);
+        return invoiceMapper.toDTO(invoices);
     }
 }

@@ -1,6 +1,7 @@
 package com.vlc2.academy.negozio.command;
 
-import com.vlc2.academy.negozio.dto.customer.CustomerCreateDTO;
+import com.vlc2.academy.negozio.dto.customer.CustomerDeleteDTO;
+import com.vlc2.academy.negozio.dto.customer.CustomerReadDTO;
 import com.vlc2.academy.negozio.service.CustomerService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,23 +15,22 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class CustomerCommand {
+public class CustomerDeleteCommand {
     private final CustomerService customerService;
-    private final CustomerCreateDTO dto;
+    private final CustomerDeleteDTO customerDeleteDTO;
 
-    public void execute(){
+    public CustomerReadDTO execute(){
         if (canExecute()){
-            doExecute();
+            return doExecute();
         }
+        return null;
     }
 
     private boolean canExecute(){
-        return !((dto.getName() == null || dto.getName().isBlank())
-                || (dto.getSurname() == null || dto.getSurname().isBlank()));
+        return !(customerDeleteDTO.getId() == null || customerDeleteDTO.getId() <= 0);
     }
 
-    private void doExecute(){
-        customerService.createUser(dto);
+    private CustomerReadDTO doExecute(){
+        return customerService.deleteUser(customerDeleteDTO);
     }
-
 }

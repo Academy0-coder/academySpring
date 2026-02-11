@@ -2,6 +2,7 @@ package com.vlc2.academy.negozio.service.impl;
 
 import com.vlc2.academy.negozio.dto.product.ProductCreateDTO;
 import com.vlc2.academy.negozio.dto.product.ProductReadDTO;
+import com.vlc2.academy.negozio.dto.product.ProductUpdateDTO;
 import com.vlc2.academy.negozio.entity.Product;
 import com.vlc2.academy.negozio.exceptions.ProductNotFound;
 import com.vlc2.academy.negozio.mapper.ProductMapper;
@@ -23,28 +24,46 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void createProduct(ProductCreateDTO productCreateDTO) {
+    public ProductReadDTO createProduct(ProductCreateDTO productCreateDTO) {
 
         Product product = new Product(productCreateDTO.getName(), productCreateDTO.getPrice(), productCreateDTO.getQuantityInStock());
-
         productRepository.save(product);
+        return productMapper.toDTO(product);
     }
 
     @Override
     public ProductReadDTO getProductById(Integer id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFound(String.format("There isn't any product with id = %d",id)));
-        ProductReadDTO productReadDTO = productMapper.toDTO(product);
-        return productReadDTO;
+        return productMapper.toDTO(product);
+    }
+
+    @Override
+    public ProductReadDTO getMostExpensiveProduct(){
+        List<Product> products = productRepository.orderByPrice();
+        Product product = products.stream().findFirst().orElseThrow(() -> new ProductNotFound("There's no product"));
+        return productMapper.toDTO(product);
     }
 
     @Override
     public List<ProductReadDTO> getProducts() {
         List<Product> products = productRepository.findAll();
-        List<ProductReadDTO> productReadDTO = products.stream()
-                .map(product -> productMapper.toDTO(product))
-                .toList();
-        return productReadDTO;
+        return productMapper.toDTO(products);
     }
+
+    @Override
+    public List<ProductReadDTO> getProductsByPrice() {
+        List<Product> products = productRepository.orderByPrice();
+        return productMapper.toDTO(products);
+    }
+
+    @Override
+    public ProductReadDTO updateProduct(ProductUpdateDTO productUpdateDTO){
+        Integer id = productUpdateDTO.getId();
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFound(String.format("There isn't any product with id = %d",id)));
+        productRepository.update(id, product.getQuantity() + productUpdateDTO.getQuantity());
+        return productMapper.toDTO(product);
+    };
 
 }

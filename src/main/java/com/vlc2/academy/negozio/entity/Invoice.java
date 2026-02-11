@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "invoice")
 @NoArgsConstructor
@@ -27,6 +29,9 @@ public class Invoice {
     @Column(name = "total")
     private Double total;
 
+    @Column(name = "execution_instance")
+    private Instant timestamp;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -35,10 +40,11 @@ public class Invoice {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public Invoice(int quantity, Customer customer, Product product){
+    public Invoice(int quantity, Customer customer, Product product, Instant timestamp){
         this.quantity = quantity;
         this.customer = customer;
         this.product = product;
+        this.timestamp = timestamp;
         taxable = quantity * product.getPrice();
         total = taxable * 1.22;
     }
