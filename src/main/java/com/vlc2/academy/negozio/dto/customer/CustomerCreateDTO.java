@@ -1,15 +1,8 @@
 package com.vlc2.academy.negozio.dto.customer;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@RequiredArgsConstructor
-@Getter
-@Setter
-public class CustomerCreateDTO {
-
-    private final String name;
-    private final String surname;
-
-}
+public record CustomerCreateDTO(String name, String surname) { }
