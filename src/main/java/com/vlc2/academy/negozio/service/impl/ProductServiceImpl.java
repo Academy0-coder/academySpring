@@ -40,9 +40,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductReadDTO getMostExpensiveProduct(){
-        List<Product> products = productRepository.orderByPrice();
-        Product product = products.stream().findFirst().orElseThrow(() -> new ProductNotFound("There's no product"));
-        return productMapper.toDTO(product);
+        return new ProductReadDTO(3,"pippo",1.234, 1, 0);
+    }
+
+    public String ciao(){
+        return "ciao";
     }
 
     @Override
