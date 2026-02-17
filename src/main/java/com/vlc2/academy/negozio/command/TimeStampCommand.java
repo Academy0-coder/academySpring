@@ -20,7 +20,7 @@ import java.util.List;
 public class TimeStampCommand {
 
     private final InvoiceService invoiceService;
-    private final TimeSpan timeSpan;
+    private TimeSpan timeSpan;
 
     public List<InvoiceReadDTO> execute(){
         if (canExecute()){

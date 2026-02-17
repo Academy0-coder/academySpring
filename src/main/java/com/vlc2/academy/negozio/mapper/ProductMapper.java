@@ -1,8 +1,6 @@
 package com.vlc2.academy.negozio.mapper;
 
-import com.vlc2.academy.negozio.dto.customer.CustomerReadDTO;
 import com.vlc2.academy.negozio.dto.product.ProductReadDTO;
-import com.vlc2.academy.negozio.entity.Customer;
 import com.vlc2.academy.negozio.entity.Product;
 import org.springframework.stereotype.Component;
 

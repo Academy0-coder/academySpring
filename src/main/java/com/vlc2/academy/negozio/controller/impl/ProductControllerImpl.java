@@ -41,6 +41,11 @@ public class ProductControllerImpl implements ProductController {
         return ResponseEntity.ok(productService.getMostExpensiveProduct());
     }
 
+    @GetMapping("/products/sell/first")
+    public ResponseEntity<ProductReadDTO> getMostSoldProduct() {
+        return ResponseEntity.ok(productService.getMostSoldProduct());
+    }
+
     @GetMapping("/products")
     public ResponseEntity<List<ProductReadDTO>> getProducts(){
         return ResponseEntity.ok(productService.getProducts());
@@ -49,6 +54,11 @@ public class ProductControllerImpl implements ProductController {
     @GetMapping("/products/price/all")
     public ResponseEntity<List<ProductReadDTO>> getProductsOrderedByPriceDesc() {
         return ResponseEntity.ok(productService.getProductsByPrice());
+    }
+
+    @GetMapping("/products/sell/all")
+    public ResponseEntity<List<ProductReadDTO>> getProductsOrderedByQuantitySOldDesc() {
+        return ResponseEntity.ok(productService.getProductsByQuantitySold());
     }
 
     @PatchMapping("/products")

@@ -9,9 +9,9 @@
 	<relativePath/> <!-- lookup parent from repository -->
 </parent>
 <groupId>com.vlc2</groupId>
-<artifactId>Negozio</artifactId>
+<artifactId>AcademySpring</artifactId>
 <version>0.0.1-SNAPSHOT</version>
-<name>Negozio</name>
+<name>AcademySpring</name>
 <description>Demo project for Spring Boot</description>
 <url/>
 <licenses>
@@ -45,6 +45,11 @@
 	</dependency>
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-webmvc</artifactId>
 	</dependency>
 	<dependency>
@@ -52,7 +57,36 @@
 		<artifactId>lombok</artifactId>
 		<optional>true</optional>
 	</dependency>
-
+	<dependency>
+		<groupId>org.mapstruct</groupId>
+		<artifactId>mapstruct</artifactId>
+		<version>1.6.3</version>
+	</dependency>
+	<dependency>
+		<groupId>com.h2database</groupId>
+		<artifactId>h2</artifactId>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-core</artifactId>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-junit-jupiter</artifactId>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-junit-jupiter</artifactId>
+		<scope>test</scope>
+	</dependency>
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-devtools</artifactId>
@@ -74,19 +108,41 @@
 		<artifactId>spring-boot-starter-webmvc-test</artifactId>
 		<scope>test</scope>
 	</dependency>
+	<dependency>
+		<groupId>com.mysql</groupId>
+		<artifactId>mysql-connector-j</artifactId>
+		<scope>runtime</scope>
+	</dependency>
 </dependencies>
+
 
 <build>
 	<plugins>
+		<plugin>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<executions>
+			<execution>
+				<goals>
+					<goal>prepare-agent</goal>
+				</goals>
+			</execution>
+			<execution>
+				<id>report</id>
+				<phase>test</phase>
+				<goals>
+					<goal>report</goal>
+				</goals>
+			</execution>
+		</executions>
+		</plugin>
 		<plugin>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-maven-plugin</artifactId>
 			<configuration>
 				<mainClass>com.vlc2.academy.negozio.NegozioApplication</mainClass>
-				<!-- -->
 			</configuration>
 		</plugin>
-
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
@@ -98,8 +154,17 @@
 						<groupId>org.projectlombok</groupId>
 						<artifactId>lombok</artifactId>
 					</path>
+					<path>
+						<groupId>org.mapstruct</groupId>
+						<artifactId>mapstruct-processor</artifactId>
+						<version>1.6.3</version>
+					</path>
 				</annotationProcessorPaths>
 			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
 		</plugin>
 	</plugins>
 </build>

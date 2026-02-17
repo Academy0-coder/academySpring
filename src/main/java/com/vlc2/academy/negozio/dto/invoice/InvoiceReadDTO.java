@@ -33,5 +33,13 @@ public class InvoiceReadDTO {
         total = BigDecimal.valueOf(quantity*price*1.22).setScale(2, RoundingMode.HALF_UP);
     }
 
+    public boolean equals(InvoiceReadDTO check){
+        return getQuantity()==check.getQuantity()&&
+                getCustomerName().equals(check.getCustomerName())&&
+                getCustomerSurname().equals(check.getCustomerSurname())&&
+                getProduct().equals(check.getProduct())&&
+                getTaxable().equals(check.getTaxable())&&
+                getTimestamp().equals(check.getTimestamp());
+    }
 
 }

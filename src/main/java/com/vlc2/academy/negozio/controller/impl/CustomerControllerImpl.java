@@ -1,7 +1,6 @@
 package com.vlc2.academy.negozio.controller.impl;
 
-import com.vlc2.academy.negozio.command.CustomerCreateCommand;
-import com.vlc2.academy.negozio.command.CustomerDeleteCommand;
+import com.vlc2.academy.negozio.command.CustomerCommand;
 import com.vlc2.academy.negozio.controller.CustomerController;
 import com.vlc2.academy.negozio.dto.customer.CustomerCreateDTO;
 import com.vlc2.academy.negozio.dto.customer.CustomerDeleteDTO;
@@ -26,8 +25,8 @@ public class CustomerControllerImpl implements CustomerController {
 
     @PostMapping("/customers")
     public ResponseEntity<CustomerReadDTO> createUser(@RequestBody CustomerCreateDTO customerCreateDTO){
-        CustomerCreateCommand customerCreateCommand = beanFactory.getBean(CustomerCreateCommand.class, customerService, customerCreateDTO);
-        return ResponseEntity.ok(customerCreateCommand.execute());
+        CustomerCommand customerCommand = beanFactory.getBean(CustomerCommand.class, customerService, customerCreateDTO);
+        return ResponseEntity.ok(customerCommand.execute());
     }
 
     @GetMapping("/customers/id/{customerId}")
@@ -57,8 +56,7 @@ public class CustomerControllerImpl implements CustomerController {
 
     @DeleteMapping("/customers")
     public ResponseEntity<CustomerReadDTO> deleteCustomer(CustomerDeleteDTO customerDeleteDTO){
-        CustomerDeleteCommand customerDeleteCommand = beanFactory.getBean(CustomerDeleteCommand.class, customerService, customerDeleteDTO);
-        return ResponseEntity.ok(customerDeleteCommand.execute());
+        return ResponseEntity.ok(customerService.deleteUser(customerDeleteDTO));
     }
 
 

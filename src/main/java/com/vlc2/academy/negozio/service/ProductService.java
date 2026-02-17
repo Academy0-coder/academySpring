@@ -21,11 +21,17 @@ public interface ProductService {
     // Get most expensive product
     ProductReadDTO getMostExpensiveProduct();
 
+    // Get most sold product
+    ProductReadDTO getMostSoldProduct();
+
     // Get all products
     List<ProductReadDTO> getProducts();
 
     // Get all products ordered by price decrescent
     List<ProductReadDTO> getProductsByPrice();
+
+    // Get all products by number of items sold
+    List<ProductReadDTO> getProductsByQuantitySold();
 
     // UPDATE
     // Add quantity of a specific product to the stock

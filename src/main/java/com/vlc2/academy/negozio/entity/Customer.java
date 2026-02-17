@@ -1,5 +1,6 @@
 package com.vlc2.academy.negozio.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

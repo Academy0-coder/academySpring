@@ -66,7 +66,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         customer.addInvoice(invoice);
 
         productRepository.save(product);
-        invoiceRepository.save(invoice);
+        Invoice save = invoiceRepository.save(invoice);
 
         return invoiceMapper.toDTO(invoice);
     }

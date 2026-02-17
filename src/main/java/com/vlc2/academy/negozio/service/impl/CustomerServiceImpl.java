@@ -43,20 +43,20 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerReadDTO> getUsers() {
         List<Customer> customers = customerRepository.findAll();
-        return customerMapper.toDTO(customers);
+        return customerMapper.ListToDTO(customers);
     }
 
     @Override
     public List<CustomerReadDTO> getUsersAlphabetically() {
         List<Customer> customers = customerRepository.findAllOrderedAlphabetically();
-        return customerMapper.toDTO(customers);
+        return customerMapper.ListToDTO(customers);
     }
 
 
     @Override
     public List<CustomerReadDTO> getUsersByName(String name) {
         List<Customer> customers = customerRepository.findByName(name);
-        return customerMapper.toDTO(customers);
+        return customerMapper.ListToDTO(customers);
     }
 
     @Override

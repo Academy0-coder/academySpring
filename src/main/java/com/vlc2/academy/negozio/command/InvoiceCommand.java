@@ -18,17 +18,22 @@ import org.springframework.stereotype.Component;
 public class InvoiceCommand {
 
     private final InvoiceService invoiceService;
-    private final InvoiceCreateDTO invoiceCreateDTO;
+    private InvoiceCreateDTO invoiceCreateDTO;
 
     public InvoiceReadDTO execute(){
         if (canExecute()){
             return doExecute();
         }
-        return null;
+        if(invoiceCreateDTO.getQuantity() == null || invoiceCreateDTO.getCustomerId() == null || invoiceCreateDTO.getProductId() == null){
+            throw new NullPointerException("Fields can't be null");
+        }
+        throw new IllegalArgumentException("Fields must be positive integers");
     }
 
     private boolean canExecute(){
-        return !(invoiceCreateDTO.getQuantity() == null || invoiceCreateDTO.getQuantity() <= 0);
+        return !((invoiceCreateDTO.getQuantity() == null || invoiceCreateDTO.getQuantity() <= 0)
+                ||(invoiceCreateDTO.getCustomerId() == null || invoiceCreateDTO.getCustomerId() <= 0)
+                ||(invoiceCreateDTO.getProductId() == null || invoiceCreateDTO.getProductId() <= 0));
     }
 
     private InvoiceReadDTO doExecute(){

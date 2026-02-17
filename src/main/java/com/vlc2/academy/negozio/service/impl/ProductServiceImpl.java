@@ -11,6 +11,7 @@ import com.vlc2.academy.negozio.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -40,12 +41,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductReadDTO getMostExpensiveProduct(){
-        return new ProductReadDTO(3,"pippo",1.234, 1, 0);
+        Product product = productRepository.findMostExpensive().orElseThrow(() -> new ProductNotFound("There's no product"));
+        return productMapper.toDTO(product);
     }
 
-    public String ciao(){
-        return "ciao";
+    @Override
+    public ProductReadDTO getMostSoldProduct() {
+        Product product = productRepository.findMostSold().orElseThrow(() -> new ProductNotFound("There's no product"));
+        return productMapper.toDTO(product);
     }
+
 
     @Override
     public List<ProductReadDTO> getProducts() {
@@ -60,11 +65,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductReadDTO> getProductsByQuantitySold() {
+        List<Product> products = productRepository.orderByQuantitySold();
+        return productMapper.toDTO(products);
+    }
+
+
+    @Override
     public ProductReadDTO updateProduct(ProductUpdateDTO productUpdateDTO){
         Integer id = productUpdateDTO.getId();
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFound(String.format("There isn't any product with id = %d",id)));
-        productRepository.update(id, product.getQuantity() + productUpdateDTO.getQuantity());
+        product.setQuantity(product.getQuantity()+productUpdateDTO.getQuantity());
+        productRepository.save(product);
         return productMapper.toDTO(product);
     };
 

@@ -15,8 +15,10 @@ public interface ProductController {
 
     ResponseEntity<ProductReadDTO> getProductById(Integer productId);
     ResponseEntity<ProductReadDTO> getMostExpensiveProduct();
+    ResponseEntity<ProductReadDTO> getMostSoldProduct();
     ResponseEntity<List<ProductReadDTO>> getProducts();
     ResponseEntity<List<ProductReadDTO>> getProductsOrderedByPriceDesc();
+    ResponseEntity<List<ProductReadDTO>> getProductsOrderedByQuantitySOldDesc();
 
     ResponseEntity<ProductReadDTO> updateProduct(ProductUpdateDTO productUpdateDTO);
 }

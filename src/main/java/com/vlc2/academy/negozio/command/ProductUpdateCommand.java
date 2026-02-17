@@ -19,13 +19,16 @@ import org.springframework.stereotype.Component;
 public class ProductUpdateCommand {
 
     private final ProductService productService;
-    private final ProductUpdateDTO productUpdateDTO;
+    private ProductUpdateDTO productUpdateDTO;
 
     public ProductReadDTO execute(){
         if (canExecute()){
             return doExecute();
         }
-        return null;
+        if(productUpdateDTO.getId() == null || productUpdateDTO.getQuantity() == null){
+            throw new NullPointerException("Fields can't be null");
+        }
+        throw new IllegalArgumentException("Fields must be positive integers");
     }
 
     private boolean canExecute(){

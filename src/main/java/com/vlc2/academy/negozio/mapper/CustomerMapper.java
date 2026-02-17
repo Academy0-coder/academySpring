@@ -14,7 +14,7 @@ public class CustomerMapper {
         return new CustomerReadDTO(customer.getId(), customer.getName(), customer.getSurname());
     }
 
-    public List<CustomerReadDTO> toDTO(List<Customer> customers){
+    public List<CustomerReadDTO> ListToDTO(List<Customer> customers){
 
         return customers.stream()
                 .map(customer -> toDTO(customer))

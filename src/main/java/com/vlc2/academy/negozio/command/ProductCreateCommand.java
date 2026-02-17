@@ -17,13 +17,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProductCreateCommand {
     private final ProductService productService;
-    private final ProductCreateDTO productCreateDTO;
+    private ProductCreateDTO productCreateDTO;
 
     public ProductReadDTO execute(){
         if (canExecute()){
             return doExecute();
         }
-        return null;
+        if(productCreateDTO.getName() == null || productCreateDTO.getPrice() == null || productCreateDTO.getQuantityInStock() == null){
+            throw new NullPointerException("Fields can't be null");
+        }
+        throw new IllegalArgumentException("Fields must be positive integers");
     }
 
     private boolean canExecute(){

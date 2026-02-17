@@ -1,5 +1,6 @@
 package com.vlc2.academy.negozio.dto.product;
 
+import com.vlc2.academy.negozio.dto.customer.CustomerReadDTO;
 import lombok.*;
 
 @AllArgsConstructor
@@ -14,4 +15,9 @@ public class ProductReadDTO {
     private Integer quantityInStock;
     private Integer quantitySold;
 
+    public boolean equals(ProductReadDTO check){
+        return getName().equals(check.getName())&&
+                getPrice().equals(check.getPrice())&&
+                getQuantityInStock().equals(check.getQuantityInStock());
+    }
 }
