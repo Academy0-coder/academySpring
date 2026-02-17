@@ -4,14 +4,13 @@ import com.vlc2.academy.negozio.dto.product.ProductCreateDTO;
 import com.vlc2.academy.negozio.dto.product.ProductReadDTO;
 import com.vlc2.academy.negozio.dto.product.ProductUpdateDTO;
 import com.vlc2.academy.negozio.entity.Product;
-import com.vlc2.academy.negozio.exceptions.ProductNotFound;
+import com.vlc2.academy.negozio.exceptions.customExceptions.ProductNotFound;
 import com.vlc2.academy.negozio.mapper.ProductMapper;
 import com.vlc2.academy.negozio.repository.ProductRepository;
 import com.vlc2.academy.negozio.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {

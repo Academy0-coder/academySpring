@@ -6,15 +6,16 @@ import com.vlc2.academy.negozio.dto.invoice.TimeSpan;
 import com.vlc2.academy.negozio.entity.Customer;
 import com.vlc2.academy.negozio.entity.Invoice;
 import com.vlc2.academy.negozio.entity.Product;
-import com.vlc2.academy.negozio.exceptions.CustomerNotFound;
-import com.vlc2.academy.negozio.exceptions.InvoiceNotFound;
-import com.vlc2.academy.negozio.exceptions.OutOfStock;
-import com.vlc2.academy.negozio.exceptions.ProductNotFound;
+import com.vlc2.academy.negozio.exceptions.customExceptions.CustomerNotFound;
+import com.vlc2.academy.negozio.exceptions.customExceptions.InvoiceNotFound;
+import com.vlc2.academy.negozio.exceptions.customExceptions.OutOfStock;
+import com.vlc2.academy.negozio.exceptions.customExceptions.ProductNotFound;
 import com.vlc2.academy.negozio.mapper.InvoiceMapper;
 import com.vlc2.academy.negozio.repository.CustomerRepository;
 import com.vlc2.academy.negozio.repository.InvoiceRepository;
 import com.vlc2.academy.negozio.repository.ProductRepository;
 import com.vlc2.academy.negozio.service.InvoiceService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -37,7 +38,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 
     @Override
-    public InvoiceReadDTO executeTransaction(InvoiceCreateDTO invoiceCreateDTO) {
+    public InvoiceReadDTO executeTransaction(@NonNull InvoiceCreateDTO invoiceCreateDTO) {
 
         Integer customerId = invoiceCreateDTO.getCustomerId();
         Integer productId = invoiceCreateDTO.getProductId();
@@ -86,7 +87,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<InvoiceReadDTO> getInvoicesInATimeSpan(TimeSpan timeSpan) {
+    public List<InvoiceReadDTO> getInvoicesInATimeSpan(@NonNull TimeSpan timeSpan) {
         List<Invoice> invoices = invoiceRepository.findInATimeSpan(timeSpan.getStart(), timeSpan.getEnd());
         return invoiceMapper.toDTO(invoices);
     }
