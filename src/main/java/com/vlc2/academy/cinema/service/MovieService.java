@@ -1,6 +1,7 @@
 package com.vlc2.academy.cinema.service;
 
 import com.vlc2.academy.cinema.dto.MovieDTO;
+import com.vlc2.academy.cinema.dto.request.MovieCreate;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public interface MovieService {
 
     // CREATE
     // Save a new movie
-    MovieDTO save(MovieDTO movieRequest);
+    MovieDTO save(MovieCreate movieRequest);
 
     // READ
     // Find all movies

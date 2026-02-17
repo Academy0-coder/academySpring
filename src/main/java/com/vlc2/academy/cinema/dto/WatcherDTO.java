@@ -24,4 +24,14 @@ public class WatcherDTO {
         this.score = score;
         this.card = card;
     }
+
+    public Double applyDiscount(Double price){
+
+        Double result = price;
+        switch(card){
+            case SILVER -> price *= 0.8;
+            case GOLD -> price *= 0.6;
+        }
+        return result;
+    }
 }

@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table
-@Entity(name = "ticket")
+@Entity
+@Table(schema = "cinema", name = "ticket")
 @NoArgsConstructor
 @Getter
 @Setter

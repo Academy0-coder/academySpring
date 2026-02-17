@@ -1,7 +1,8 @@
 package com.vlc2.academy.cinema.command;
 
 import com.vlc2.academy.cinema.dto.TheaterDTO;
-import com.vlc2.academy.cinema.exception.TheaterNotFound;
+import com.vlc2.academy.cinema.dto.request.TheaterCreate;
+import com.vlc2.academy.cinema.exception.customs.TheaterNotFound;
 import com.vlc2.academy.cinema.service.TheaterService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class TheaterCommand {
 
     private final TheaterService theaterService;
-    private TheaterDTO request;
+    private final TheaterCreate request;
 
     public TheaterDTO execute(){
         if (canExecute()){

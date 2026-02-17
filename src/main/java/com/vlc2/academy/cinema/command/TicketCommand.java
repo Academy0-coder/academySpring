@@ -1,7 +1,10 @@
 package com.vlc2.academy.cinema.command;
 
 import com.vlc2.academy.cinema.dto.TicketDTO;
-import com.vlc2.academy.cinema.exception.TicketNotFound;
+import com.vlc2.academy.cinema.dto.request.TicketCreate;
+import com.vlc2.academy.cinema.dto.request.TicketRead;
+import com.vlc2.academy.cinema.exception.customs.InputInvalid;
+import com.vlc2.academy.cinema.exception.customs.TicketNotFound;
 import com.vlc2.academy.cinema.service.TicketService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,23 +21,22 @@ import org.springframework.stereotype.Component;
 public class TicketCommand {
 
     private final TicketService ticketService;
-    private TicketDTO request;
+    private final TicketCreate request;
 
-    public TicketDTO execute(){
+    public TicketRead execute(){
         if (canExecute()){
             return doExecute();
         }
-        throw new TicketNotFound("Invalid arguments: name and surname can't be empty");
+        throw new InputInvalid("Invalid arguments: fields can't be null and must be positive integers");
     }
 
     private boolean canExecute(){
-        return !((request.getShow() == null)
-                || (request.getWatcher() == null)
-                || (request.getSeatNumber() == null || request.getSeatNumber() <= 0 || request.getSeatNumber() > request.getShow().getTheater().getSeats())
-                || (request.getWatcher() == null));
+        return !((request.getSeatNumber() == null || request.getSeatNumber() <= 0)
+                || (request.getShowId() == null || request.getShowId() <= 0)
+                || (request.getWatcherId() == null || request.getWatcherId() <= 0));
     }
 
-    private TicketDTO doExecute(){
+    private TicketRead doExecute(){
         return ticketService.save(request);
     }
 

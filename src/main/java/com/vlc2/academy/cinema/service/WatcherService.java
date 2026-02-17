@@ -1,6 +1,7 @@
 package com.vlc2.academy.cinema.service;
 
 import com.vlc2.academy.cinema.dto.WatcherDTO;
+import com.vlc2.academy.cinema.dto.request.WatcherCreate;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public interface WatcherService {
 
     // CREATE
     // Save a new watcher
-    WatcherDTO save(WatcherDTO watcherRequest);
+    WatcherDTO save(WatcherCreate watcherRequest);
 
     // READ
     // Find all watchers

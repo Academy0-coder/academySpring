@@ -11,6 +11,9 @@ import java.util.Optional;
 @Repository
 public interface ShowRepository extends JpaRepository<Show,Integer> {
 
-    @Query("SELECT s FROM movie_show s ORDER BY s.id DESC LIMIT 1")
+    @Query("SELECT EXISTS (SELECT 1 FROM Show s)")
+    Boolean isPresent();
+
+    @Query(value = "SELECT * FROM movie_show ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Optional<Show> findLast();
 }

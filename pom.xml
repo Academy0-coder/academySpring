@@ -144,7 +144,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-maven-plugin</artifactId>
 			<configuration>
-				<mainClass>com.vlc2.academy.negozio.NegozioApplication</mainClass>
+				<!-- <mainClass>com.vlc2.academy.negozio.NegozioApplication</mainClass> -->
+				<mainClass>com.vlc2.academy.cinema.CinemaApplication</mainClass>
 			</configuration>
 		</plugin>
 		<plugin>

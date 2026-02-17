@@ -16,13 +16,13 @@ import java.time.LocalDateTime;
 public class ShowDTO {
 
     private Integer id;
-    private Integer seatsTaken;
+    private Integer freeSeats;
     private LocalDateTime begin;
     private Theater theater;
     private Movie movie;
 
-    public ShowDTO(Integer seatsTaken, LocalDateTime begin, Theater theater, Movie movie) {
-        this.seatsTaken = seatsTaken;
+    public ShowDTO(Integer freeSeats, LocalDateTime begin, Theater theater, Movie movie) {
+        this.freeSeats = freeSeats;
         this.begin = begin;
         this.theater = theater;
         this.movie = movie;

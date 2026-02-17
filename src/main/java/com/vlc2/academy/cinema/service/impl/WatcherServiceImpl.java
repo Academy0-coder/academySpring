@@ -1,15 +1,20 @@
 package com.vlc2.academy.cinema.service.impl;
 
+import com.vlc2.academy.cinema.dto.request.WatcherCreate;
 import com.vlc2.academy.cinema.entity.Watcher;
 import com.vlc2.academy.cinema.dto.WatcherDTO;
-import com.vlc2.academy.cinema.exception.WatcherNotFound;
+import com.vlc2.academy.cinema.entity.other.Membership;
+import com.vlc2.academy.cinema.exception.customs.EmptyListException;
+import com.vlc2.academy.cinema.exception.customs.WatcherNotFound;
 import com.vlc2.academy.cinema.mapper.WatcherMapper;
 import com.vlc2.academy.cinema.repository.WatcherRepository;
 import com.vlc2.academy.cinema.service.WatcherService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class WatcherServiceImpl implements WatcherService {
 
@@ -17,8 +22,14 @@ public class WatcherServiceImpl implements WatcherService {
     WatcherMapper watcherMapper;
 
     @Override
-    public WatcherDTO save(WatcherDTO request) {
-        Watcher save = watcherMapper.toEntity(request);
+    public WatcherDTO save(WatcherCreate request) {
+
+        WatcherDTO mapped = new WatcherDTO(request.getName(),
+                request.getSurname(),
+                0,
+                Membership.BRONZE);
+
+        Watcher save = watcherMapper.toEntity(mapped);
         watcherRepository.save(save);
 
         Watcher watcher = watcherRepository.findLast().get();
@@ -28,6 +39,11 @@ public class WatcherServiceImpl implements WatcherService {
 
     @Override
     public List<WatcherDTO> findAll() {
+
+        if(!watcherRepository.isPresent()){
+            throw new EmptyListException("There are no watchers in the database");
+        }
+
         List<Watcher> watchers = watcherRepository.findAll();
         List<WatcherDTO> response = watcherMapper.listToDto(watchers);
         return response;

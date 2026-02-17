@@ -6,10 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.relational.core.mapping.Table;
 
-@Table
-@Entity(name = "customer")
+
+@Entity(name = "Watcher")
+@Table(schema = "cinema", name = "customer")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -39,5 +39,15 @@ public class Watcher {
         this.surname = surname;
         this.score = score;
         this.card = card;
+    }
+
+    public Double applyDiscount(Double price){
+
+        Double result = price;
+        switch(card){
+            case SILVER -> result *= 0.8;
+            case GOLD -> result *= 0.6;
+        }
+        return result;
     }
 }

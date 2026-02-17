@@ -10,7 +10,10 @@ import java.util.Optional;
 @Repository
 public interface WatcherRepository extends JpaRepository<Watcher,Integer> {
 
-    @Query("SELECT c FROM Customer c ORDER BY c.id DESC LIMIT 1")
+    @Query("SELECT EXISTS (SELECT 1 FROM Watcher w)")
+    Boolean isPresent();
+
+    @Query(value = "SELECT * FROM customer ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Optional<Watcher> findLast();
 
 }

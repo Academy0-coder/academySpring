@@ -11,7 +11,10 @@ import java.util.Optional;
 @Repository
 public interface TheaterRepository extends JpaRepository<Theater,Integer> {
 
-    @Query("SELECT t FROM movie_theater t ORDER BY t.id DESC LIMIT 1")
+    @Query("SELECT EXISTS (SELECT 1 FROM Theater t)")
+    Boolean isPresent();
+
+    @Query(value = "SELECT * FROM movie_theater ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Optional<Theater> findLast();
 
 }

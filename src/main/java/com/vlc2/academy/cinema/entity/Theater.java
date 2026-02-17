@@ -7,8 +7,8 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Table
-@Entity(name = "movie_theater")
+@Entity
+@Table(schema = "cinema", name = "movie_theater")
 @NoArgsConstructor
 @Getter
 @Setter

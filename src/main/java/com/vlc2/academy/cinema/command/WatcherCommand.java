@@ -1,7 +1,9 @@
 package com.vlc2.academy.cinema.command;
 
 import com.vlc2.academy.cinema.dto.WatcherDTO;
-import com.vlc2.academy.cinema.exception.WatcherNotFound;
+import com.vlc2.academy.cinema.dto.request.WatcherCreate;
+import com.vlc2.academy.cinema.exception.customs.InputInvalid;
+import com.vlc2.academy.cinema.exception.customs.WatcherNotFound;
 import com.vlc2.academy.cinema.service.WatcherService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +20,13 @@ import org.springframework.stereotype.Component;
 public class WatcherCommand {
 
     private final WatcherService watcherService;
-    private WatcherDTO request;
+    private final WatcherCreate request;
 
     public WatcherDTO execute(){
         if (canExecute()){
             return doExecute();
         }
-        throw new WatcherNotFound("Invalid arguments: name and surname can't be empty");
+        throw new InputInvalid("Invalid arguments: name and surname can't be empty");
     }
 
     private boolean canExecute(){

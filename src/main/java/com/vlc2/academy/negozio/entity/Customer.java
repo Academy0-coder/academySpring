@@ -1,6 +1,5 @@
 package com.vlc2.academy.negozio.entity;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "customer")
+@Table(schema = "store", name = "customer")
 @NoArgsConstructor
 @Getter
 @Setter

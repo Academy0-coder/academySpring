@@ -1,21 +1,36 @@
 package com.vlc2.academy.cinema.controller;
 
+import com.vlc2.academy.cinema.command.WatcherCommand;
 import com.vlc2.academy.cinema.dto.WatcherDTO;
+import com.vlc2.academy.cinema.dto.request.WatcherCreate;
+import com.vlc2.academy.cinema.service.WatcherService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public interface WatcherController {
+@AllArgsConstructor
+@RestController()
+public class WatcherController {
 
-    // POST REQUEST
-    // save a new watcher
-    ResponseEntity<WatcherDTO> saveWatcher(WatcherDTO request);
+    private WatcherService watcherService;
+    private BeanFactory beanFactory;
 
-    // GET REQUEST
-    // get all watchers
-    ResponseEntity<List<WatcherDTO>> getAllWatchers ();
+    @PostMapping("/watchers")
+    public ResponseEntity<WatcherDTO> saveWatcher(@RequestBody WatcherCreate request){
+        WatcherCommand watcherCommand = beanFactory.getBean(WatcherCommand.class, watcherService, request);
+        return ResponseEntity.ok(watcherCommand.execute());
+    }
 
-    // get a watcher by id
-    ResponseEntity<WatcherDTO> getWatcherById (Integer id);
+    @GetMapping("/watchers")
+    public ResponseEntity<List<WatcherDTO>> getAllWatchers() {
+        return ResponseEntity.ok(watcherService.findAll());
+    }
 
+    @GetMapping("/watchers/{id}")
+    public ResponseEntity<WatcherDTO> getWatcherById(@PathVariable Integer id) {
+        return ResponseEntity.ok(watcherService.findById(id));
+    }
 }

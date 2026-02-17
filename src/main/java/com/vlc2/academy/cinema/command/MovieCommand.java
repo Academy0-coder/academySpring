@@ -1,7 +1,8 @@
 package com.vlc2.academy.cinema.command;
 
 import com.vlc2.academy.cinema.dto.MovieDTO;
-import com.vlc2.academy.cinema.exception.MovieNotFound;
+import com.vlc2.academy.cinema.dto.request.MovieCreate;
+import com.vlc2.academy.cinema.exception.customs.MovieNotFound;
 import com.vlc2.academy.cinema.service.MovieService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class MovieCommand {
 
     private final MovieService movieService;
-    private MovieDTO request;
+    private final MovieCreate request;
 
     public MovieDTO execute(){
         if (canExecute()){

@@ -8,8 +8,8 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Table
-@Entity(name = "movie_show")
+@Entity
+@Table(schema = "cinema", name = "movie_show")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -20,8 +20,8 @@ public class Show {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "number_seats_taken")
-    private Integer seatsTaken;
+    @Column(name = "number_free_seats")
+    private Integer freeSeats;
 
     @Column(name = "show_begin")
     private LocalDateTime begin;
