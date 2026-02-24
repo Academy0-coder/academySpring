@@ -16,6 +16,7 @@ public class ShowRead {
     private Integer id;
     private Integer freeSeats;
     private LocalDateTime begin;
+    private LocalDateTime end;
     private String theater;
     private String movie;
 

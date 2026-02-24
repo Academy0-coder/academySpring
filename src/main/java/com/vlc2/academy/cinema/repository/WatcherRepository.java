@@ -16,4 +16,7 @@ public interface WatcherRepository extends JpaRepository<Watcher,Integer> {
     @Query(value = "SELECT * FROM customer ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Optional<Watcher> findLast();
 
+    @Query("SELECT COUNT(w) FROM Watcher w")
+    Integer countAll();
+
 }

@@ -1,6 +1,7 @@
 package com.vlc2.academy.cinema.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(schema = "cinema", name = "movie_show")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Show {
@@ -26,6 +28,9 @@ public class Show {
     @Column(name = "show_begin")
     private LocalDateTime begin;
 
+    @Column(name = "show_end")
+    private LocalDateTime end;
+
     @ManyToOne
     @JoinColumn(name = "theater_id")
     private Theater theater;
@@ -37,4 +42,11 @@ public class Show {
     @OneToMany(mappedBy = "show")
     List<Ticket> tickets;
 
+    public Show(Integer freeSeats, LocalDateTime begin, LocalDateTime end, Theater theater, Movie movie) {
+        this.freeSeats = freeSeats;
+        this.begin = begin;
+        this.end = end;
+        this.theater = theater;
+        this.movie = movie;
+    }
 }

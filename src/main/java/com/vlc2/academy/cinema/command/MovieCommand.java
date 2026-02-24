@@ -32,7 +32,7 @@ public class MovieCommand {
         return !((request.getName() == null || request.getName().isBlank())
                 || (request.getDirectorName() == null || request.getDirectorName().isBlank())
                 || (request.getPrice() == null || request.getPrice() <= 0)
-                || (request.getRating() == null || request.getRating() <1 || request.getRating() >5)
+                || (request.getRating() == null || request.getRating() <1 || request.getRating() >10)
                 || (request.getGenre() == null));
     }
 

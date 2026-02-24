@@ -22,6 +22,9 @@ public class Theater {
     @Column(name = "theater_name")
     private String name;
 
+    @Column(name = "number_rows")
+    private Integer rows;
+
     @Column(name = "number_seats")
     private Integer seats;
 

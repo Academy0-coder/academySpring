@@ -35,16 +35,6 @@ class CustomerControllerImplTest {
     ResponseEntity<CustomerReadDTO> response = ResponseEntity.ok(read);
 
 
-
-//    @Test
-//    void createUser() {
-//
-//        CustomerCreateDTO create = new CustomerCreateDTO("a","b");
-//        CustomerCommand command = factory.getBean(CustomerCommand.class,service,create);
-//        when().thenReturn(read);
-//        Assertions.assertEquals(response.getClass(),controller.createUser(create).getClass());
-//    }
-
     @Test
     void getUserById() {
         Integer id = read.getId();

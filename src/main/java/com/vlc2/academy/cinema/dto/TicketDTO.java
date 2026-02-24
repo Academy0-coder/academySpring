@@ -14,12 +14,14 @@ import lombok.Setter;
 public class TicketDTO {
 
     private Integer id;
+    private char row;
     private Integer seatNumber;
     private Double price;
     private Watcher watcher;
     private Show show;
 
-    public TicketDTO(Integer seatNumber, Double price, Watcher watcher, Show show) {
+    public TicketDTO(char row, Integer seatNumber, Double price, Watcher watcher, Show show) {
+        this.row = row;
         this.seatNumber = seatNumber;
         this.price = price;
         this.watcher = watcher;

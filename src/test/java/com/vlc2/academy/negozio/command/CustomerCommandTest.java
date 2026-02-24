@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
+
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class CustomerCommandTest {
@@ -25,7 +26,7 @@ class CustomerCommandTest {
     @InjectMocks
     CustomerCommand command;
 
-    CustomerReadDTO readDto;
+    CustomerReadDTO readDto = new CustomerReadDTO(1, "a", "a");
     CustomerCreateDTO dto = new CustomerCreateDTO("a","a");
 
 

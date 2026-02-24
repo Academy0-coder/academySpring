@@ -1,14 +1,13 @@
 package com.vlc2.academy.cinema.exception;
 
 import com.vlc2.academy.cinema.exception.customs.*;
-import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.vlc2.academy.cinema")
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmptyListException.class)
@@ -61,10 +60,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InvalidBooking.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ErrorResponseCinema handleInvalidBooking (InvalidBooking exc){
         return new ErrorResponseCinema("INVALID_BOOKING",exc.getMessage());
+    }
+
+    @ExceptionHandler(InvalidTime.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorResponseCinema handleInvalidTime (InvalidTime exc){
+        return new ErrorResponseCinema("INVALID_TIME",exc.getMessage());
     }
 
 

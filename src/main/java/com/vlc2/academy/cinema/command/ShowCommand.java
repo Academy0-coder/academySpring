@@ -1,10 +1,8 @@
 package com.vlc2.academy.cinema.command;
 
-import com.vlc2.academy.cinema.dto.ShowDTO;
 import com.vlc2.academy.cinema.dto.request.ShowCreate;
 import com.vlc2.academy.cinema.dto.request.ShowRead;
 import com.vlc2.academy.cinema.exception.customs.InputInvalid;
-import com.vlc2.academy.cinema.exception.customs.ShowNotFound;
 import com.vlc2.academy.cinema.service.ShowService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

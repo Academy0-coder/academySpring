@@ -1,10 +1,8 @@
 package com.vlc2.academy.cinema.command;
 
-import com.vlc2.academy.cinema.dto.TicketDTO;
 import com.vlc2.academy.cinema.dto.request.TicketCreate;
 import com.vlc2.academy.cinema.dto.request.TicketRead;
 import com.vlc2.academy.cinema.exception.customs.InputInvalid;
-import com.vlc2.academy.cinema.exception.customs.TicketNotFound;
 import com.vlc2.academy.cinema.service.TicketService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

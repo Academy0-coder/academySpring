@@ -1,5 +1,6 @@
 package com.vlc2.academy.negozio.repository;
 
+import com.vlc2.academy.negozio.entity.Customer;
 import com.vlc2.academy.negozio.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -24,6 +25,8 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     @Query("SELECT p FROM Product p ORDER BY p.quantitySold DESC LIMIT 1")
     Optional<Product> findMostSold();
+
+    List<Product> findByName (String name);
 
 
 }

@@ -3,7 +3,6 @@ package com.vlc2.academy.cinema.command;
 import com.vlc2.academy.cinema.dto.WatcherDTO;
 import com.vlc2.academy.cinema.dto.request.WatcherCreate;
 import com.vlc2.academy.cinema.exception.customs.InputInvalid;
-import com.vlc2.academy.cinema.exception.customs.WatcherNotFound;
 import com.vlc2.academy.cinema.service.WatcherService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -6,10 +6,7 @@ import com.vlc2.academy.cinema.entity.Movie;
 import com.vlc2.academy.cinema.entity.Show;
 import com.vlc2.academy.cinema.dto.ShowDTO;
 import com.vlc2.academy.cinema.entity.Theater;
-import com.vlc2.academy.cinema.exception.customs.EmptyListException;
-import com.vlc2.academy.cinema.exception.customs.MovieNotFound;
-import com.vlc2.academy.cinema.exception.customs.ShowNotFound;
-import com.vlc2.academy.cinema.exception.customs.TheaterNotFound;
+import com.vlc2.academy.cinema.exception.customs.*;
 import com.vlc2.academy.cinema.mapper.ShowMapper;
 import com.vlc2.academy.cinema.repository.MovieRepository;
 import com.vlc2.academy.cinema.repository.ShowRepository;
@@ -19,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -39,9 +37,22 @@ public class ShowServiceImpl implements ShowService {
         Theater theater = theaterRepository.findById(request.getTheaterId())
                 .orElseThrow(()-> new TheaterNotFound("There's no theater with id: "+request.getTheaterId()));
 
+        Optional<Show> lastShow = showRepository.findFirstByTheaterAndBeginOrderByBeginDesc(theater, request.getBegin());
+
+        if(lastShow.isPresent())
+            if(lastShow.get()
+                        .getEnd().isAfter(request.getBegin())){
+            throw new InvalidTime(String.format("You can't insert a show at %s in %s because %s finishes at %s",
+                    request.getBegin(),
+                    theater.getName(),
+                    lastShow.get().getMovie().getName(),
+                    lastShow.get().getEnd()));
+        }
+
 
         ShowDTO mapped = new ShowDTO(theater.getSeats(),
                 request.getBegin(),
+                request.getBegin().plusMinutes(movie.getLength()),
                 theater,
                 movie);
 

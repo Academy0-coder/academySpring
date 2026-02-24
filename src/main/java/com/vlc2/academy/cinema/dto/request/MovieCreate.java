@@ -17,4 +17,5 @@ public class MovieCreate {
     private MovieType genre;
     private Double rating;
     private Double price;
+    private Integer length;
 }

@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 public class TicketCreate {
 
+    private char row;
     private Integer seatNumber;
     private Integer watcherId;
     private Integer showId;

@@ -3,9 +3,7 @@ package com.vlc2.academy.negozio.command;
 import com.vlc2.academy.negozio.dto.invoice.InvoiceCreateDTO;
 import com.vlc2.academy.negozio.dto.invoice.InvoiceReadDTO;
 import com.vlc2.academy.negozio.service.InvoiceService;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -14,10 +12,11 @@ import org.springframework.stereotype.Component;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class InvoiceCommand {
 
-    private final InvoiceService invoiceService;
+    private InvoiceService invoiceService;
     private InvoiceCreateDTO invoiceCreateDTO;
 
     public InvoiceReadDTO execute(){

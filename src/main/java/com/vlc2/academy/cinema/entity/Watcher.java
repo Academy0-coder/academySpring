@@ -50,4 +50,8 @@ public class Watcher {
         }
         return result;
     }
+
+    public String getFullName(){
+        return name+" "+surname;
+    }
 }

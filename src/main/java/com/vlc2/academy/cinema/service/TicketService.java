@@ -1,11 +1,10 @@
 package com.vlc2.academy.cinema.service;
 
-import com.vlc2.academy.cinema.dto.TicketDTO;
-import com.vlc2.academy.cinema.dto.WatcherDTO;
 import com.vlc2.academy.cinema.dto.request.TicketCreate;
 import com.vlc2.academy.cinema.dto.request.TicketRead;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 public interface TicketService {
 
@@ -15,7 +14,7 @@ public interface TicketService {
 
     // READ
     // Find all tickets
-    List<TicketRead> findAll();
+    Page<TicketRead> findAll(Integer page, Integer size);
     // Find a ticket by id
     TicketRead findById(Integer id);
 }

@@ -3,9 +3,12 @@ package com.vlc2.academy.cinema.repository;
 import com.vlc2.academy.cinema.entity.Show;
 import com.vlc2.academy.cinema.entity.Ticket;
 import com.vlc2.academy.cinema.entity.Watcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.Optional;
 
@@ -23,4 +26,6 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 
     @Query("SELECT t FROM Ticket t WHERE t.show = :show AND t.watcher = :watcher")
     Optional<Ticket> findTicketByShowAndWatcher(Show show, Watcher watcher);
+
+    Page<Ticket> findAll(Pageable pageable);
 }

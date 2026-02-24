@@ -1,6 +1,7 @@
 package com.vlc2.academy.cinema.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 @Entity
 @Table(schema = "cinema", name = "ticket")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Ticket {
@@ -16,6 +18,9 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @Column(name = "row_letter")
+    private char row;
 
     @Column(name = "seat_number")
     private Integer seatNumber;
@@ -31,5 +36,10 @@ public class Ticket {
     @JoinColumn(name = "show_id")
     private Show show;
 
-
+    public Ticket(Integer seatNumber, Double price, Watcher watcher, Show show) {
+        this.seatNumber = seatNumber;
+        this.price = price;
+        this.watcher = watcher;
+        this.show = show;
+    }
 }

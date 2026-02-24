@@ -2,6 +2,7 @@ package com.vlc2.academy.cinema.service.impl;
 
 import com.vlc2.academy.cinema.dto.request.TicketCreate;
 import com.vlc2.academy.cinema.dto.request.TicketRead;
+import com.vlc2.academy.cinema.entity.Movie;
 import com.vlc2.academy.cinema.entity.Show;
 import com.vlc2.academy.cinema.entity.Ticket;
 import com.vlc2.academy.cinema.dto.TicketDTO;
@@ -9,11 +10,14 @@ import com.vlc2.academy.cinema.entity.Watcher;
 import com.vlc2.academy.cinema.entity.other.Membership;
 import com.vlc2.academy.cinema.exception.customs.*;
 import com.vlc2.academy.cinema.mapper.TicketMapper;
+import com.vlc2.academy.cinema.repository.MovieRepository;
 import com.vlc2.academy.cinema.repository.ShowRepository;
 import com.vlc2.academy.cinema.repository.TicketRepository;
 import com.vlc2.academy.cinema.repository.WatcherRepository;
 import com.vlc2.academy.cinema.service.TicketService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +30,9 @@ public class TicketServiceImpl implements TicketService {
     TicketMapper ticketMapper;
     ShowRepository showRepository;
     WatcherRepository watcherRepository;
+    MovieRepository movieRepository;
+
+
 
     // Method for the creation of a ticket
     @Override
@@ -60,10 +67,17 @@ public class TicketServiceImpl implements TicketService {
                     watcher.getSurname()));
         }
 
-        TicketDTO mapped = new TicketDTO(request.getSeatNumber(),
+        TicketDTO mapped = new TicketDTO(request.getRow(),
+                request.getSeatNumber(),
                 watcher.applyDiscount(price),
                 watcher,
                 show);
+
+        // Update the total revenue of the movie
+        Movie movie = show.getMovie();
+        movie.setRevenue(movie.getRevenue()+watcher.applyDiscount(price));
+        movieRepository.save(movie);
+
 
         // Update the score of the watcher (and possibly their membership)
         watcher.setScore(watcher.getScore() + (int) Math.floor(price));
@@ -76,6 +90,7 @@ public class TicketServiceImpl implements TicketService {
         }
 
         watcherRepository.save(watcher);
+
 
         // Update the number of free seats
         show.setFreeSeats(show.getFreeSeats()-1);
@@ -91,14 +106,27 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public List<TicketRead> findAll() {
+    public Page<TicketRead> findAll(Integer page, Integer size) {
 
         if(!ticketRepository.isPresent()){
             throw new EmptyListException("There are no tickets in the database");
         }
 
-        List<Ticket> tickets = ticketRepository.findAll();
-        List<TicketRead> response = ticketMapper.read(ticketMapper.listToDto(tickets));
+        if(page <= 0){
+            throw new InputInvalid("Page number must be positive");
+        }
+        else if((page+1)*size > ticketRepository.count()){
+            throw new InputInvalid(String.format("There are only %d pages of size %d",
+                    (int) Math.ceil((double) ticketRepository.count()/size),
+                    size));
+        }
+
+        else if(size <= 0){
+            throw new InputInvalid("Size number must be positive");
+        }
+
+        Pageable pageable = Pageable.ofSize(size).withPage(page-1);
+        Page<TicketRead> response = ticketRepository.findAll(pageable).map(ticketMapper::toDto).map(ticketMapper::read);
         return response;
     }
 

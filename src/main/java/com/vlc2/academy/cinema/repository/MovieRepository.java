@@ -18,4 +18,7 @@ public interface MovieRepository extends JpaRepository<Movie,Integer> {
     @Query(value = "SELECT * FROM movie ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Optional<Movie> findLast();
 
+    @Query("SELECT COUNT(m) FROM Movie m")
+    Integer countAll();
+
 }

@@ -39,6 +39,12 @@ public class Movie {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "length")
+    private Integer length;
+
+    @Column(name = "revenue")
+    private Double revenue;
+
     @OneToMany(mappedBy = "movie")
     List<Show> shows;
 

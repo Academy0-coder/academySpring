@@ -12,6 +12,7 @@ import lombok.Setter;
 public class TicketRead {
 
     private Integer id;
+    private char row;
     private Integer seatNumber;
     private Double price;
     private String watcher;
