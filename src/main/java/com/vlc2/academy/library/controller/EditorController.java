@@ -5,7 +5,6 @@ import com.vlc2.academy.library.dto.request.EditorRequest;
 import com.vlc2.academy.library.dto.response.EditorResponse;
 import com.vlc2.academy.library.service.EditorService;
 import com.vlc2.academy.library.utility.StringUtility;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +32,27 @@ public class EditorController {
     @GetMapping()
     public ResponseEntity<List<EditorResponse>> getAllEditors() {
 
-        return ResponseEntity.ok(service.findAll());
+        return ResponseEntity.ok(service.getAllEditors());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EditorResponse> getEditorById(@PathVariable Integer id) {
 
-        return ResponseEntity.ok(service.findById(id));
+        return ResponseEntity.ok(service.getEditorById(id));
+    }
+
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<EditorResponse> findEditorByName(@PathVariable String name) {
+
+        return ResponseEntity.ok(service.getEditorByName(name));
+    }
+
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<EditorResponse> findEditorByEmail(@PathVariable String email) {
+
+        return ResponseEntity.ok(service.getEditorByEmail(email));
     }
 
 }

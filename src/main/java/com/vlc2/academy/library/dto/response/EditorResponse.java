@@ -1,17 +1,19 @@
 package com.vlc2.academy.library.dto.response;
 
-import com.vlc2.academy.library.entity.Book;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+
+
+// Dto that represents an editor passed as a response
+// This Dto is meant to be shown
+
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class EditorResponse {
 

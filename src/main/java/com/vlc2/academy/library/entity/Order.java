@@ -22,7 +22,10 @@ public class Order {
     private Integer id;
 
     @Column(name = "day_order")
-    private LocalDate day;
+    private LocalDate dayOrder;
+
+    @Column(name = "day_deliver")
+    private LocalDate dayDeliver;
 
     @Column(name = "delivered")
     private Boolean delivered;
@@ -31,8 +34,8 @@ public class Order {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    public Order(LocalDate day, Boolean delivered, Book book) {
-        this.day = day;
+    public Order(LocalDate dayOrder, Boolean delivered, Book book) {
+        this.dayOrder = dayOrder;
         this.delivered = delivered;
         this.book = book;
     }

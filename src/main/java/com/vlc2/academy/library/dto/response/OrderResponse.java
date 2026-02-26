@@ -1,21 +1,26 @@
 package com.vlc2.academy.library.dto.response;
 
-import com.vlc2.academy.library.entity.Book;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+
+
+
+// Dto that represents an order passed as a response
+// This Dto is meant to be shown
+
+
 public class OrderResponse {
 
     private Integer id;
-    private LocalDate day;
+    private LocalDate dayOrder;
+    private LocalDate dayDeliver;
     private Boolean delivered;
-    private Book book;
+    private String book;
 }

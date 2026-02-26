@@ -20,7 +20,7 @@ create table book(
 id int unsigned not null primary key auto_increment,
 book_name varchar(255) unique not null,
 author_name varchar(255) not null,
-book_year year,
+book_year int unsigned,
 price decimal(8,2) unsigned not null,
 quantity_sold int unsigned,
 quantity_in_stock int unsigned,
@@ -47,6 +47,7 @@ references book (id)
 create table orders(
 id int unsigned not null primary key auto_increment,
 day_order datetime,
+day_deliver datetime,
 delivered boolean not null,
 book_id int unsigned not null,
 

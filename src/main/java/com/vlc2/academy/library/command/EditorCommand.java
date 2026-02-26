@@ -24,7 +24,7 @@ public class EditorCommand {
 
     public EditorResponse execute() {
         validate();
-        return service.save(request);
+        return service.insert(request);
     }
 
     public void validate(){

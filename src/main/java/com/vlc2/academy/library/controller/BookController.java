@@ -32,15 +32,26 @@ public class BookController {
         return ResponseEntity.ok(command.execute());
     }
 
-    @GetMapping()
-    public ResponseEntity<List<BookResponse>> getAllBooks() {
-
-        return ResponseEntity.ok(service.findAll());
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getBookById(@PathVariable Integer id) {
 
-        return ResponseEntity.ok(service.findById(id));
+        return ResponseEntity.ok(service.getBookById(id));
     }
+
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<BookResponse> getBookByName(@PathVariable String name) {
+
+        return ResponseEntity.ok(service.getBookByName(name));
+    }
+
+
+    @GetMapping()
+    public ResponseEntity<List<BookResponse>> getAllBooks() {
+
+        return ResponseEntity.ok(service.getAllBooks());
+    }
+
+
 }

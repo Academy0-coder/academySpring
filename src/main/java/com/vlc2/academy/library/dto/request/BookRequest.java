@@ -1,20 +1,15 @@
 package com.vlc2.academy.library.dto.request;
 
-import com.vlc2.academy.library.entity.Editor;
-import com.vlc2.academy.library.entity.Order;
-import com.vlc2.academy.library.entity.Sale;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.time.Year;
-import java.util.List;
+
+// Dto that represents a book passed as a request
+// This Dto is only meant for creation of new records
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class BookRequest {
 

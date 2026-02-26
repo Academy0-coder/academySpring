@@ -29,7 +29,7 @@ public class BookCommand {
 
     public BookResponse execute() {
         validate();
-        return service.save(request);
+        return service.insert(request);
     }
 
     public void validate(){

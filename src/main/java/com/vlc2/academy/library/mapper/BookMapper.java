@@ -19,31 +19,50 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {EditorService.class})
 public interface BookMapper {
 
+
+
+
+    // --------------------------------
+    // ENTITY MAPPERS
+    // --------------------------------
+
+    // From Entity To Dto
     BookResponse toDto(Book book);
 
+    // From a List of Entities to a List of Dtos
     List<BookResponse> listToDto(List<Book> books);
 
+    // From a Request Dto To An Entity (For CREATE Methods)
     @Mapping(target = "quantitySold", constant = "0")
     @Mapping(target = "editor", source = "editor", qualifiedByName = "stringToEditor")
-    Book toEntity(BookRequest request, @Context EditorService editorService, @Context EditorMapper editorMapper);
+    Book toEntity(BookRequest request, @Context EditorService editorService);
 
+
+
+
+
+    // --------------------------------
+    // DEFAULT MAPPERS
+    // --------------------------------
+
+    // Mapper from Integer to Year
     default Year mappedYear(Integer year){
         return Year.of(year);
     }
 
+    // Mapper from Double to BigDecimal (Used for prices)
     default BigDecimal mappedPrice(Double price){
         return BigDecimal.valueOf(price).setScale(2, RoundingMode.HALF_UP);
     }
 
     @Named("stringToEditor")
-    default Editor stringToEditor(String editor, @Context EditorService editorService, @Context EditorMapper editorMapper){
+    default Editor stringToEditor(String editor, @Context EditorService editorService){
 
-        return editorService.getEntityByName(editor);
+        return editorService.findByName(editor);
     }
 
     default String editorToString(Editor editor){
         return editor.getName();
     }
-
 
 }
