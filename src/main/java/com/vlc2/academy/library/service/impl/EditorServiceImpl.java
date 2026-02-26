@@ -5,6 +5,8 @@ import com.vlc2.academy.library.dto.response.EditorResponse;
 import com.vlc2.academy.library.entity.Editor;
 import com.vlc2.academy.library.mapper.BookMapper;
 import com.vlc2.academy.library.mapper.EditorMapper;
+import com.vlc2.academy.library.mapper.OrderMapper;
+import com.vlc2.academy.library.mapper.SaleMapper;
 import com.vlc2.academy.library.repository.EditorRepository;
 import com.vlc2.academy.library.service.EditorService;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,6 +14,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,7 @@ public class EditorServiceImpl implements EditorService {
     @Override
     public EditorResponse save(EditorRequest request) {
         Editor editor = mapper.toEntity(request);
+        editor.setBooks(new ArrayList<>());
         repository.save(editor);
         return mapper.toDto(editor, bookMapper);
     }

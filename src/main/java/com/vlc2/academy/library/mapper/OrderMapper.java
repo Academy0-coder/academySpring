@@ -1,6 +1,7 @@
 package com.vlc2.academy.library.mapper;
 
 import com.vlc2.academy.library.dto.response.OrderResponse;
+import com.vlc2.academy.library.entity.Book;
 import com.vlc2.academy.library.entity.Order;
 import org.mapstruct.Mapper;
 
@@ -11,5 +12,10 @@ public interface OrderMapper {
 
     OrderResponse toDto(Order order);
 
-    List<OrderResponse> toDto(List<Order> orders);
+    List<OrderResponse> listToDto(List<Order> orders);
+
+    default String bookToString (Book book) {
+        return book.getName();
+    }
+
 }

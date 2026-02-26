@@ -2,8 +2,12 @@ package com.vlc2.academy.library.mapper;
 
 import com.vlc2.academy.library.dto.request.BookRequest;
 import com.vlc2.academy.library.dto.response.BookResponse;
+import com.vlc2.academy.library.dto.response.OrderResponse;
+import com.vlc2.academy.library.dto.response.SaleResponse;
 import com.vlc2.academy.library.entity.Book;
 import com.vlc2.academy.library.entity.Editor;
+import com.vlc2.academy.library.entity.Order;
+import com.vlc2.academy.library.entity.Sale;
 import com.vlc2.academy.library.service.EditorService;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
@@ -14,6 +18,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Year;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Mapper(componentModel = "spring", uses = {EditorService.class})
@@ -25,7 +30,7 @@ public interface BookMapper {
 
     @Mapping(target = "quantitySold", constant = "0")
     @Mapping(target = "editor", source = "editor", qualifiedByName = "stringToEditor")
-    Book toEntity(BookRequest request, @Context EditorService editorService, @Context EditorMapper editorMapper);
+    Book toEntity(BookRequest request, @Context EditorService editorService);
 
     default Year mappedYear(Integer year){
         return Year.of(year);
@@ -36,7 +41,7 @@ public interface BookMapper {
     }
 
     @Named("stringToEditor")
-    default Editor stringToEditor(String editor, @Context EditorService editorService, @Context EditorMapper editorMapper){
+    default Editor stringToEditor(String editor, @Context EditorService editorService){
 
         return editorService.getEntityByName(editor);
     }
@@ -44,6 +49,5 @@ public interface BookMapper {
     default String editorToString(Editor editor){
         return editor.getName();
     }
-
 
 }

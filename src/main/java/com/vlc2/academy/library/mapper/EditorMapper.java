@@ -22,9 +22,9 @@ public interface EditorMapper {
 
     Editor toEntity(EditorRequest request);
 
-    default List<BookResponse> editorToString(List<Book> books, @Context BookMapper bookMapper){
+    default List<BookResponse> editorToString(List<Book> books, @Context BookMapper bookMapper) {
         return books.stream()
-                .map(bookMapper::toDto)
+                .map(book -> bookMapper.toDto(book))
                 .collect(Collectors.toList());
     }
 

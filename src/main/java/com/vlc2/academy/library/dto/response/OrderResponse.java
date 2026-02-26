@@ -10,12 +10,11 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class OrderResponse {
 
     private Integer id;
     private LocalDate day;
     private Boolean delivered;
-    private Book book;
+    private String book;
 }
