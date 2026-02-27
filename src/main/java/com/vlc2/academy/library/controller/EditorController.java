@@ -29,6 +29,12 @@ public class EditorController {
         return ResponseEntity.ok(command.execute());
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<EditorResponse> findEditorByName(@PathVariable String name) {
+
+        return ResponseEntity.ok(service.findByName(name));
+    }
+
     @GetMapping()
     public ResponseEntity<List<EditorResponse>> getAllEditors() {
 
