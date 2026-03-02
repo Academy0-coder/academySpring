@@ -7,10 +7,10 @@ import com.vlc2.academy.library.service.OrderService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -40,6 +40,11 @@ public class OrderController {
     @GetMapping("/pending")
     public ResponseEntity<List<OrderResponse>> getPendingOrders(){
         return ResponseEntity.ok(orderService.getAllPending());
+    }
+
+    @GetMapping("/pending/byDay")
+    public ResponseEntity<List<OrderResponse>> getNewOrders(@RequestParam LocalDate day){
+        return ResponseEntity.ok(orderService.getAllPendingByDay(day));
     }
 
 }

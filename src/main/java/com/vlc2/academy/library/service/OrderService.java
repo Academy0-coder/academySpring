@@ -14,7 +14,8 @@ public interface OrderService {
     Order findById(Integer id);
     List<Order> findAll();
     List<Order> findAllPending();
-    void createOrder(Book book);
+    List<Order> findAllPendingByDay(LocalDate date);
+    void createOrder(Book book, LocalDate date);
     void executeOrderCheck(String book, LocalDate date);
     Boolean existsById(Integer id);
     LocalDate getDayOrder (Integer id);
@@ -24,5 +25,6 @@ public interface OrderService {
     OrderResponse getOrderById(Integer id);
     List<OrderResponse> getAll();
     List<OrderResponse> getAllPending();
+    List<OrderResponse> getAllPendingByDay(LocalDate date);
 
 }

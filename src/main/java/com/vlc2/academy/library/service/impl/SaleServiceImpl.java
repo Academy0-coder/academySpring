@@ -1,6 +1,7 @@
 package com.vlc2.academy.library.service.impl;
 
 import com.vlc2.academy.library.dto.request.SaleRequest;
+import com.vlc2.academy.library.dto.response.BookCountResponse;
 import com.vlc2.academy.library.dto.response.SaleResponse;
 import com.vlc2.academy.library.dto.response.SalesMapResponse;
 import com.vlc2.academy.library.entity.Book;
@@ -119,7 +120,6 @@ public class SaleServiceImpl implements SaleService {
         Integer week = DateUtility.extractWeek(day);
         List<Book> books = bookRepository.findBySalesWeek(week);
         List<BookCount>  booksCount = new ArrayList<>();
-        Map<String, Integer> result = new LinkedHashMap<>();
 
         // Save a list of bookCounts each of which is made by a book and the integer that represents the copies sold
         for (Book book : books) {
@@ -129,13 +129,9 @@ public class SaleServiceImpl implements SaleService {
         // Sort the list by number of copies sold
         booksCount = booksCount.stream().sorted(Comparator.comparing(BookCount::getCount).reversed()).collect(Collectors.toList());
 
-        // Fill the linkedHashMap with the values of the bookCounts
-        for (BookCount bookCount : booksCount) {
-            result.put(bookCount.getBook().getName(),bookCount.getCount());
-        }
 
         // Return a SalesMapResponse with the map built and the ends of the week considered
-        return new SalesMapResponse(result, DateUtility.firstDateOfWeek(day), DateUtility.lastDateOfWeek(day));
+        return new SalesMapResponse(mapper.listBookCountToDto(booksCount), DateUtility.firstDateOfWeek(day), DateUtility.lastDateOfWeek(day));
     }
 
 
@@ -153,7 +149,6 @@ public class SaleServiceImpl implements SaleService {
         Integer month = DateUtility.extractMonth(day);
         List<Book> books = bookRepository.findBySalesMonth(month);
         List<BookCount>  booksCount = new ArrayList<>();
-        TreeMap<String, Integer> result = new TreeMap<>();
 
         // Save a list of bookCounts each of which is made by a book and the integer that represents the copies sold
         for (Book book : books) {
@@ -163,13 +158,9 @@ public class SaleServiceImpl implements SaleService {
         // Sort the list by number of copies sold
         booksCount = booksCount.stream().sorted(Comparator.comparing(BookCount::getCount).reversed()).collect(Collectors.toList());
 
-        // Fill the linkedHashMap with the values of the bookCounts
-        for (BookCount bookCount : booksCount) {
-            result.put(bookCount.getBook().getName(),bookCount.getCount());
-        }
 
         // Return a SalesMapResponse with the map built and the ends of the month considered
-        return new SalesMapResponse(result, DateUtility.firstDateOfMonth(day), DateUtility.lastDateOfMonth(day));
+        return new SalesMapResponse(mapper.listBookCountToDto(booksCount), DateUtility.firstDateOfMonth(day), DateUtility.lastDateOfMonth(day));
     }
 
 

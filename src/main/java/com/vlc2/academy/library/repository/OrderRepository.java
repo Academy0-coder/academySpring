@@ -23,4 +23,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     // Get the list of delivered orders of a specific editor (by passing their name)
     List<Order> findByDeliveredIsTrueAndBookEditorName(String name);
+
+    // Get the list of pending orders of a specific day
+    List <Order> findByDayOrderAndDeliveredIsFalse(LocalDate date);
 }

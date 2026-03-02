@@ -9,7 +9,7 @@ import com.vlc2.academy.cinema.entity.Watcher;
 import com.vlc2.academy.cinema.repository.*;
 import com.vlc2.academy.cinema.service.ShowService;
 import com.vlc2.academy.cinema.service.TicketService;
-import com.vlc2.academy.cinema.util.Utils;
+import com.vlc2.academy.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -41,15 +41,12 @@ public class DbPopulate implements CommandLineRunner {
     @Autowired
     private MovieRepository movieRepository;
 
-    @Autowired
-    private Utils util;
-
     public boolean generateRandomShow(){
 
-        Theater theater = theaterRepository.findById(util.randomNumber(theaterRepository.countAll())).get();
-        Movie movie = movieRepository.findById(util.randomNumber(movieRepository.countAll())).get();
+        Theater theater = theaterRepository.findById(Utils.randomNumber(theaterRepository.countAll())).get();
+        Movie movie = movieRepository.findById(Utils.randomNumber(movieRepository.countAll())).get();
 
-        LocalDateTime beginTime = util.randomTime(LocalTime.of(18,00),
+        LocalDateTime beginTime = Utils.randomTime(LocalTime.of(18,00),
                 LocalTime.of(22,30),
                 10,
                 LocalDate.of(2026,02,15),
@@ -71,10 +68,10 @@ public class DbPopulate implements CommandLineRunner {
 
     public boolean generateRandomTicket(){
 
-        Show show = showRepository.findById(util.randomNumber(showRepository.countAll())).get();
-        Watcher watcher = watcherRepository.findById(util.randomNumber(watcherRepository.countAll())).get();
-        Integer seatNumber = util.randomNumber(show.getTheater().getSeats());
-        char row = (char) (96+util.randomNumber(show.getTheater().getRows()));
+        Show show = showRepository.findById(Utils.randomNumber(showRepository.countAll())).get();
+        Watcher watcher = watcherRepository.findById(Utils.randomNumber(watcherRepository.countAll())).get();
+        Integer seatNumber = Utils.randomNumber(show.getTheater().getSeats());
+        char row = (char) (96+Utils.randomNumber(show.getTheater().getRows()));
 
         TicketCreate generated = new TicketCreate(row,seatNumber,watcher.getId(),show.getId());
 

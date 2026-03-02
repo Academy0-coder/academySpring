@@ -1,9 +1,11 @@
 package com.vlc2.academy.library.mapper;
 
 import com.vlc2.academy.library.dto.request.SaleRequest;
+import com.vlc2.academy.library.dto.response.BookCountResponse;
 import com.vlc2.academy.library.dto.response.SaleResponse;
 import com.vlc2.academy.library.entity.Book;
 import com.vlc2.academy.library.entity.Sale;
+import com.vlc2.academy.library.entity.custom.BookCount;
 import com.vlc2.academy.library.service.BookService;
 import com.vlc2.academy.library.utility.DateUtility;
 import org.mapstruct.Context;
@@ -35,6 +37,10 @@ public interface SaleMapper {
     @Mapping(target = "month", source = "date", qualifiedByName = "getMonth")
     @Mapping(target = "week", source = "date", qualifiedByName = "getWeek")
     Sale toEntity(SaleRequest saleRequest, @Context BookService bookService);
+
+
+    // From a List of BookCount to a List of BookCountResponse
+    List<BookCountResponse> listBookCountToDto(List<BookCount> books);
 
 
 

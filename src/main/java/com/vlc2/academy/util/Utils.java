@@ -1,4 +1,4 @@
-package com.vlc2.academy.cinema.util;
+package com.vlc2.academy.util;
 
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 public class Utils {
 
-    public Integer randomNumber(Integer min, Integer max){
+    public static Integer randomNumber(Integer min, Integer max){
         if(max<min){
             throw new RuntimeException("Max must be higher or equal than min");
         }
@@ -20,7 +20,7 @@ public class Utils {
         return ((int) ((Math.random())*(max-min)))+min;
     }
 
-    public Integer randomNumber(Integer range){
+    public static Integer randomNumber(Integer range){
         if(range<1){
             throw new RuntimeException("Range must be 1 or higher");
         }
@@ -28,7 +28,7 @@ public class Utils {
         return randomNumber(1,range);
     }
 
-    public LocalDateTime randomTime(LocalTime begin, LocalTime end, Integer minutes, LocalDate firstDate, LocalDate lastDate){
+    public static LocalDateTime randomTime(LocalTime begin, LocalTime end, Integer minutes, LocalDate firstDate, LocalDate lastDate){
 
         Long days = ChronoUnit.DAYS.between(firstDate,lastDate);
         Integer daysAdvance = randomNumber(0, days.intValue());
@@ -39,6 +39,36 @@ public class Utils {
         LocalTime time = begin.plusMinutes(randomMinutes*minutes);
 
         return LocalDateTime.of(day,time);
+    }
+
+    public static int randomPoissonQuantile(double lambda) {
+
+        Double x = Math.random();
+        return poissonQuantile(x, lambda);
+    }
+
+
+    public static int poissonQuantile(double x, double lambda) {
+
+        if (x <= 0){
+            return 0;
+        }
+
+        if (x >= 1){
+            throw new RuntimeException("The repartition function of a Lambda distribution exists only for 0<x<1");
+        }
+
+        double p = Math.exp(-lambda);
+        double cumulative = p;
+        int counter = 0;
+
+        while (cumulative < x) {
+            counter++;
+            p = p * lambda / counter;
+            cumulative += p;
+        }
+
+        return counter;
     }
 
 }

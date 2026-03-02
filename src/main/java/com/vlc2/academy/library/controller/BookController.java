@@ -25,9 +25,9 @@ public class BookController {
     @PostMapping()
     public ResponseEntity<BookResponse> createBook(@RequestBody BookRequest book) {
 
-        book.setName(StringUtility.capitalizeFirst(book.getName()));
-        book.setAuthor(StringUtility.capitalizeFirst(book.getAuthor()));
-        book.setEditor(StringUtility.capitalizeFirst(book.getEditor()));
+        book.setName(StringUtility.toUpperCamelCase(book.getName()));
+        book.setAuthor(StringUtility.toUpperCamelCase(book.getAuthor()));
+        book.setEditor(StringUtility.toUpperCamelCase(book.getEditor()));
         BookCommand command = beanFactory.getBean(BookCommand.class, service, editorService, book);
         return ResponseEntity.ok(command.execute());
     }

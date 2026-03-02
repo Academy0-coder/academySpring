@@ -43,8 +43,8 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void createOrder(Book book) {
-        Order order = new Order(null, false, book);
+    public void createOrder(Book book, LocalDate date) {
+        Order order = new Order(date, false, book);
         save(order);
     }
 
@@ -68,6 +68,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    @Override
+    public List<Order> findAllPendingByDay(LocalDate date) {
+        return repository.findByDayOrderAndDeliveredIsFalse(date);
+    }
+
+
     // Method that is called within a sale insertion
     // It checks if a re stock is needed. If such, it creates a new order request
     @Override
@@ -75,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
         Book book = bookService.findByName(bookName);
         bookService.setValuesAfterSale(book);
         if(bookService.CheckStock(book, date)){
-            createOrder(book);
+            createOrder(book, date);
         }
     }
 
@@ -149,6 +155,15 @@ public class OrderServiceImpl implements OrderService {
         return mapper.listToDto(findAllPending());
     }
 
+    /**
+     * @param date
+     * @return List of Order Response
+     * General method for retrieving all pending orders of a specific date
+     */
+    @Override
+    public List<OrderResponse> getAllPendingByDay(LocalDate date) {
+        return mapper.listToDto(findAllPendingByDay(date));
+    }
 
 
 }

@@ -1,11 +1,12 @@
 package com.vlc2.academy.library.dto.response;
 
+import com.vlc2.academy.library.entity.custom.BookCount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 
 
 
@@ -19,7 +20,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class SalesMapResponse {
 
-    private final Map<String, Integer> books;
+
+    private final List<BookCountResponse> books;
     private final LocalDate startDate;
     private final LocalDate endDate;
 

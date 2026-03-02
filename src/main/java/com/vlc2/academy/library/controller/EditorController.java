@@ -23,16 +23,10 @@ public class EditorController {
     @PostMapping()
     public ResponseEntity<EditorResponse> createEditor(@RequestBody EditorRequest editor) {
 
-        editor.setName(StringUtility.capitalizeFirst(editor.getName()));
+        editor.setName(StringUtility.toUpperCamelCase(editor.getName()));
         editor.setEmail(editor.getEmail().toLowerCase());
         EditorCommand command = beanFactory.getBean(EditorCommand.class, service, editor);
         return ResponseEntity.ok(command.execute());
-    }
-
-    @GetMapping("/name/{name}")
-    public ResponseEntity<EditorResponse> findEditorByName(@PathVariable String name) {
-
-        return ResponseEntity.ok(service.findByName(name));
     }
 
     @GetMapping()

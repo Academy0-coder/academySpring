@@ -27,7 +27,7 @@ public class SaleController {
     @PostMapping
     public ResponseEntity<SaleResponse> carryOutSale(@RequestBody SaleRequest sale) {
 
-        sale.setBook(StringUtility.capitalizeFirst(sale.getBook()));
+        sale.setBook(StringUtility.toUpperCamelCase(sale.getBook()));
         SaleCommand command = beanFactory.getBean(SaleCommand.class, service, sale);
         return ResponseEntity.ok(command.execute());
     }
